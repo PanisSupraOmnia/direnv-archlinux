@@ -13,26 +13,14 @@ makedepends=('go-pie')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/direnv/direnv/archive/v$pkgver.tar.gz")
 sha256sums=('dd54393661602bb989ee880f14c41f7a7b47a153777999509127459edae52e47')
 
-_gopackagepath=github.com/direnv/direnv
-
-prepare() {
-  [[ -f /etc/profile.d/go.sh ]] && source /etc/profile.d/go.sh
-  export GOPATH="$srcdir/go"
-
-  mkdir -p "$GOPATH/src/$(dirname "$_gopackagepath")"
-  mv "$srcdir/$pkgname-$pkgver" "$GOPATH/src/$_gopackagepath"
-}
-
 build() {
-  export GOPATH="$srcdir/go"
-  cd "$GOPATH/src/$_gopackagepath"
+  cd "$pkgname-$pkgver"
   export GO_FLAGS="-gcflags=all=-trimpath=${PWD} -asmflags=all=-trimpath=${PWD}"
   make GO_LDFLAGS="-extldflags=${LDFLAGS}"
 }
 
 package() {
-  export GOPATH="$srcdir/go"
-  cd "$GOPATH/src/$_gopackagepath"
+  cd "$pkgname-$pkgver"
   make install DESTDIR="$pkgdir/usr"
   install -Dm644 LICENSE.md "$pkgdir/usr/share/licenses/$pkgname/LICENSE.md"
 }
