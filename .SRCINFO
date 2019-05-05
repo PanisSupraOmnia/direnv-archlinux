@@ -7,7 +7,8 @@ pkgbase = direnv
 	arch = i686
 	arch = armv7h
 	license = MIT
-	makedepends = go
+	makedepends = go-pie
+	depends = glibc
 	source = direnv-2.20.1.tar.gz::https://github.com/direnv/direnv/archive/v2.20.1.tar.gz
 	sha256sums = dd54393661602bb989ee880f14c41f7a7b47a153777999509127459edae52e47
 
